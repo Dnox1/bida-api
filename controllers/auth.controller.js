@@ -40,22 +40,18 @@ module.exports.logout = (req, res, next) => {
 }
 
 module.exports.getProfile = (req, res, next) => {
-  throw createError(501, 'Not Implemented')
+  res.json(req.user);
 }
 
 module.exports.editProfile = (req, res, next) => {
-  throw createError(501, 'Not Implemented')
+  delete req.body.email;
+
+  const user = req.user;
+  Object.keys(req.body).forEach(prop => user[prop] = req.body[prop]);
+  if(req.file) user.avatarURL = req.file.secure_url;
+
+  user.save()
+    .then(user => res.status(201).json(user))
+    .catch(next)
 }
 
-
-// module.exports.getProfile = (req, res, next) => {
-//   User.findById(req.params.id)
-//   .then(user => {
-//     if(!user) {
-//       throw createError(404, 'User not found')
-//     } else {
-//       res.json(user)
-//     }
-//   }) 
-//   .catch(next)
-// }
