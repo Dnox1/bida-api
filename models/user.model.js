@@ -7,9 +7,17 @@ const PASSWORD_PATTERN = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
 const PHONE_PATTERN = /^[679]{1}[0-9]{8}$/;
 const NIF_PATTERN = /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]{1}$/i;
 const NIE_PATTERN = /^[XYZ]{1}[0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]{1}$/i;
+const SSNUMBER_PATTERN = /^[0-9]{12}$/;
+const BIDA_URL_PATTERN = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+// en BIDA_URL_PATTERN poner la estructura de la URL de la APP
 
 
 const userSchema = new mongoose.Schema({
+  owner: {
+    type: [String],
+    default: [this.id],
+    required: [true, 'An error has ocurred']
+  },
   email: {
     type:String,
     required: 'email is required',
@@ -54,19 +62,79 @@ const userSchema = new mongoose.Schema({
     NIF: {
       type: String,
       match: [NIF_PATTERN, 'Invalid NIF Pattern']
-
     },
     NIE: {
       type: String,
       match: [NIE_PATTERN, 'Invalid NIF Pattern']
+    },
+    SocialSecurityNumber: {
+      type: String,
+      minlength: 12,
+      maxlength: 12,
+      MATCH: [SSNUMBER_PATTERN, 'Invalid Social Security Number']
     }
   },
   medicalData:{
     bloodType: {
       type: String,
-      enum: ['A+','A-','B+','B-','AB+', 'AB-', '0+', '0-']
+      enum: ['A+','A-','B+','B-','AB+', 'AB-', '0+', '0-'],
+      required: [true, 'Like Human you have a Blood Type ;)']
+    },
+    foodAllergy: {
+      type: String,
+      required: [true, 'choose at least one Food Allergy option'],
+      enum: ['unknow', 'peanut','Soy', 'Nickle', 'Egg', 'Sulfates', 'Tree nut', 'Peanut', 'apples', 'cinnamon', 'garlic', 'chives', 'mustard', 'vanilla ', 'beef', 'pork', 'venison', 'poultry', 'grass', 'Citrus', 'sesame', 'Shellfish', 'mollusk', 'Insect', 'wheat','rice flour', 'coconut flour', 'almond flour', 'milk', 'Molds']
+    },
+    medAllergy: {
+      type: String,
+      required: [true, 'choose at least one Med Allergy option'],
+      enum: ['unknow', 'Penicillin', 'Formaldehyde', 'Salicylates', 'Latex', 'steroids','Antihistamines', 'Decongestants', 'corticosteroids', 'Epinephrine', ' amoxicillin', 'Aspirin','ibuprofen']
+    },
+    ambientalAllergy: {
+      type: String,
+      required: [true,'Choose at least one Ambiental Allergy option'],
+      enum: ['unknow', 'peanut', 'grass', 'pollen', 'Insect stings', 'cat', 'dog', 'cockroaches', 'Latex', 'Molds', 'Dust Mites']
+    },
+    animalAllergy: {
+      type: String,
+      required: [true, 'Choose at least one Animal Allergy option'],
+      enum: ['unknow', 'Insect', 'cat', 'dog', 'cockroaches', 'bee stings']
+    },
+    othersAllergy: {
+      type: String
+    },
+    medsINeed: {
+      type: String,
+      required: [true, 'Choose at least one Med that you need or nothing']
+    },
+    diseases: {
+      type: String,
+      required: [true, 'Details your diseases or select nothing']
+    }
+  },
+contacts: {
+  principalContact: {
+    principalContactLink : {
+      type: String,
+      required: true,
+      match: [BIDA_URL_PATTERN, 'Invalid Link']
+    },
+    principalContactTag: {
+      type: String,
+      required: true,
+    }
+  },
+  aditionalContact1: {
+    aditionalContact1Link : {
+      type: String,
+      match: [BIDA_URL_PATTERN, 'Invalid Link']
+    },
+    aditionalContact1Tag: {
+      type: String,
     }
   }
+  
+}
 }, {
   timestamps: true,
   toJSON: {
