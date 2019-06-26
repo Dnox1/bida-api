@@ -14,13 +14,12 @@ const BIDA_URL_PATTERN = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z
 
 const userSchema = new mongoose.Schema({
   owner: {
-    type: [String],
-    default: [this.id],
-    required: [true, 'An error has ocurred']
+    type: String,
+    default: []
   },
   email: {
     type:String,
-    required: 'email is required',
+    required: [true, 'email is required'],
     unique: true,
     lowercase: true,
     trim: true,
@@ -28,27 +27,34 @@ const userSchema = new mongoose.Schema({
   },
   userName: {
     type: String,
-    required: 'user name is required',
+    required: [true, 'user name is required'],
     unique: true,
     trim: true
   },
   password: {
     type: String,
-    required: true,
+    required: [true, 'password is required'],
     match: [PASSWORD_PATTERN, 'Passwords must contain at least eight characters, including uppercase, lowercase letters and numbers.']
   },
   userImageURL: {
     type: String,
-    unique: true,
-    required: 'Image is need for recognise you ;)',
+    unique: [true, 'url image ir required'],
+    required: [true, 'Image is need for recognise you ;)'],
     match: [URL_PATTERN, 'Invalid User Image URL Pattern']
   },
   personalData:{
-    name: { type: String },
-    surName: { type: String },
+    name: { 
+      type: String,
+      required: [true, 'your name is required']
+    },
+    surName: { 
+      type: String,
+      required: [true, 'Your Surname is required']
+    },
     surName2: { type: String },
     mobile: {
       type: String,
+      required: [true, 'Your telephone contact is required'],
       match: [PHONE_PATTERN, 'Invalid Phone Number, a spanish phone number is required']
     },
     homePhone: {
@@ -81,34 +87,36 @@ const userSchema = new mongoose.Schema({
       required: [true, 'Like Human you have a Blood Type ;)']
     },
     foodAllergy: {
-      type: String,
+      type: [String],
       required: [true, 'choose at least one Food Allergy option'],
-      enum: ['unknow', 'peanut','Soy', 'Nickle', 'Egg', 'Sulfates', 'Tree nut', 'Peanut', 'apples', 'cinnamon', 'garlic', 'chives', 'mustard', 'vanilla ', 'beef', 'pork', 'venison', 'poultry', 'grass', 'Citrus', 'sesame', 'Shellfish', 'mollusk', 'Insect', 'wheat','rice flour', 'coconut flour', 'almond flour', 'milk', 'Molds']
+      enum: ['Unknow', 'Beer',  'Peanut', 'Soy', 'Nickle', 'Egg', 'Sulfates', 'Tree nut', 'Peanut', 'Apples', 'Cinnamon', 'Garlic', 'Chives', 'Mustard', 'Vanilla ', 'Beef', 'Pork', 'Venison', 'Poultry', 'Grass', 'Citrus', 'Sesame', 'Shellfish', 'Mollusk', 'Insect', 'Wheat','Rice flour', 'Coconut flour', 'Almond flour', 'milk', 'Molds']
     },
     medAllergy: {
-      type: String,
+      type: [String],
       required: [true, 'choose at least one Med Allergy option'],
-      enum: ['unknow', 'Penicillin', 'Formaldehyde', 'Salicylates', 'Latex', 'steroids','Antihistamines', 'Decongestants', 'corticosteroids', 'Epinephrine', ' amoxicillin', 'Aspirin','ibuprofen']
+      enum: ['Unknow', 'Placebo', 'Penicillin', 'Formaldehyde', 'Salicylates', 'Latex', 'steroids','Antihistamines', 'Decongestants', 'Corticosteroids', 'Epinephrine', ' Amoxicillin', 'Aspirin','Ibuprofen']
     },
     ambientalAllergy: {
-      type: String,
+      type: [String],
       required: [true,'Choose at least one Ambiental Allergy option'],
-      enum: ['unknow', 'peanut', 'grass', 'pollen', 'Insect stings', 'cat', 'dog', 'cockroaches', 'Latex', 'Molds', 'Dust Mites']
+      enum: ['Unknow', 'Trump`s pollution denies', 'Peanut', 'Grass', 'Pollen', 'Insect stings', 'Cat', 'Dog', 'Cockroaches', 'Latex', 'Molds', 'Dust Mites']
     },
     animalAllergy: {
-      type: String,
+      type: [String],
       required: [true, 'Choose at least one Animal Allergy option'],
-      enum: ['unknow', 'Insect', 'cat', 'dog', 'cockroaches', 'bee stings']
+      enum: ['Unknow', 'adorable cat', 'Insect', 'Cat', 'Dog', 'Cockroaches', 'Bee stings']
     },
     othersAllergy: {
-      type: String
+      type: [String],
+      required: [true, 'Choose at least one Allergy option or nothing'],
+
     },
     medsINeed: {
-      type: String,
+      type: [String],
       required: [true, 'Choose at least one Med that you need or nothing']
     },
     diseases: {
-      type: String,
+      type: [String],
       required: [true, 'Details your diseases or select nothing']
     }
   },
@@ -117,23 +125,33 @@ contacts: {
     principalContactLink : {
       type: String,
       required: true,
-      match: [BIDA_URL_PATTERN, 'Invalid Link']
+      match: [BIDA_URL_PATTERN, 'Invalid Bida User Link']
     },
     principalContactTag: {
       type: String,
-      required: true,
+      required: [true, ' Help the assistance to know who will call']
     }
   },
   aditionalContact1: {
     aditionalContact1Link : {
       type: String,
-      match: [BIDA_URL_PATTERN, 'Invalid Link']
+      match: [BIDA_URL_PATTERN, 'Invalid Bida User Link']
     },
     aditionalContact1Tag: {
       type: String,
+      required: [true, ' Help the assistance to know who will call']
     }
-  }
-  
+  },
+  aditionalContact2: {
+    aditionalContact2Link : {
+      type: String,
+      match: [BIDA_URL_PATTERN, 'Invalid Bida User Link']
+    },
+    aditionalContact2Tag: {
+      type: String,
+    //  required: [true, ' Help the assistance to know who will call']
+    }
+  },
 }
 }, {
   timestamps: true,
@@ -149,7 +167,6 @@ contacts: {
   }
 })
 
-// VALIDACIÓN NIF Y CIF https://www.lawebdelprogramador.com/codigo/JavaScript/1992-Validar-un-CIF-NIF-y-DNI.html
 
 userSchema.pre('save', function (next) {
   const user = this;
