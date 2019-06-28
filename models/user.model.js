@@ -13,6 +13,7 @@ const BIDA_URL_PATTERN = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z
 
 
 const userSchema = new mongoose.Schema({
+  // REVISAR QUE OWNER ES CORRECTO.
   owner: {
     type: String,
     default: []
