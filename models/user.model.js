@@ -11,6 +11,25 @@ const SSNUMBER_PATTERN = /^[0-9]{12}$/;
 const BIDA_URL_PATTERN = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 // en BIDA_URL_PATTERN poner la estructura de la URL de la APP
 
+const contactsSchema = new mongoose.Schema({
+  relationship: {
+    type: String,
+    required: [true, "Contact relationship is necesary"]
+  },
+  contactname: {
+    type: String,
+    required: [true, "Contact name is necesary"]
+  },
+  telephone: {
+    type: String,
+    required: [true, "Aa telephone contact is required"],
+    match: [
+      PHONE_PATTERN,
+      "Invalid Phone Number, a spanish phone number is required"
+    ]
+  }
+},{ _id: false}) 
+
 const userSchema = new mongoose.Schema(
   {
     email: {
@@ -45,27 +64,7 @@ const userSchema = new mongoose.Schema(
         required: [true, "Your Surname is required"]
       },
       aAContacts: {
-        type: [
-          {
-            relationship: {
-              type: String,
-              required: [true, "Contact relationship is necesary"]
-            },
-            contactname: {
-              type: String,
-              required: [true, "Contact name is necesary"]
-            },
-            telephone: {
-              type: String,
-              required: [true, "Aa telephone contact is required"],
-              match: [
-                PHONE_PATTERN,
-                "Invalid Phone Number, a spanish phone number is required"
-              ]
-            }
-          },
-        ],
-
+        type: [contactsSchema],
         required: true,
         validate: [validateContacts, "A AaContact is necesary"]
       },

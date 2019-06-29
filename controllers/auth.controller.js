@@ -48,7 +48,7 @@ module.exports.editProfile = (req, res, next) => {
 
   const user = req.user;
   Object.keys(req.body).forEach(prop => user[prop] = req.body[prop]);
-  if(req.file) user.avatarURL = req.file.secure_url;
+  //if(req.file) user.avatarURL = req.file.secure_url;
 
   user.save()
     .then(user => res.status(201).json(user))
