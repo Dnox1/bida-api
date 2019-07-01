@@ -21,7 +21,7 @@ const contactsSchema = new mongoose.Schema({
     required: [true, "Contact name is necesary"]
   },
   telephone: {
-    type: String,
+    type: [String],
     required: [true, "Aa telephone contact is required"],
     match: [
       PHONE_PATTERN,
