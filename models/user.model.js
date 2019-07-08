@@ -10,6 +10,8 @@ const NIF_NIE_PATTERN = /^[0-9XYZ]{1}[0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]{1}$/i;
 const SSNUMBER_PATTERN = /^[0-9]{12}$/;
 const BIDA_URL_PATTERN = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 // en BIDA_URL_PATTERN poner la estructura de la URL de la APP
+const dataMedical = "../Data/allergies.js"
+
 
 const contactsSchema = new mongoose.Schema({
   relationship: {
@@ -80,97 +82,29 @@ const userSchema = new mongoose.Schema(
     medicalData: {
       blood: {
         type: String,
-        enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "0+", "0-"],
+        enum: [dataMedical.blood],
         required: [true, "Like Human you have a Blood Type ;)"]
       },
       allergies: {
         medical: {
           type: [String],
           required: [true, "choose at least one Med Allergy option"],
-          enum: [
-            "Unknow",
-            "Placebo",
-            "Penicillin",
-            "Formaldehyde",
-            "Salicylates",
-            "Latex",
-            "steroids",
-            "Antihistamines",
-            "Decongestants",
-            "Corticosteroids",
-            "Epinephrine",
-            "Amoxicillin",
-            "Aspirin",
-            "Ibuprofen"
-          ]
+          enum: [dataMedical.medical]
         },
         food: {
           type: [String],
           required: [true, "choose at least one Food Allergy option"],
-          enum: [
-            "Unknow",
-            "Beer",
-            "Peanut",
-            "Soy",
-            "Nickle",
-            "Egg",
-            "Sulfates",
-            "Tree nut",
-            "Peanut",
-            "Apples",
-            "Cinnamon",
-            "Garlic",
-            "Chives",
-            "Mustard",
-            "Vanilla ",
-            "Beef",
-            "Pork",
-            "Venison",
-            "Poultry",
-            "Grass",
-            "Citrus",
-            "Sesame",
-            "Shellfish",
-            "Mollusk",
-            "Insect",
-            "Wheat",
-            "Rice flour",
-            "Coconut flour",
-            "Almond flour",
-            "milk",
-            "Molds"
-          ]
+          enum: [dataMedical.food]
         },
         ambiental: {
           type: [String],
           required: [true, "Choose at least one Ambiental Allergy option"],
-          enum: [
-            "Unknow",
-            "Trump`s pollution denies",
-            "Peanut",
-            "Grass",
-            "Pollen",
-            "Insect stings",
-            "Cat",
-            "Dog",
-            "Cockroaches",
-            "Latex",
-            "Molds",
-            "Dust Mites"
-          ]
+          enum: [dataMedical.ambiental]
         },
         animal: {
           type: [String],
           required: [true, "Choose at least one Animal Allergy option"],
-          enum: [
-            "Unknow",
-            "adorable cat",
-            "Insect",
-            "Cat",
-            "Dog",
-            "Cockroaches",
-            "Bee stings"
-          ]
+          enum: [dataMedical.animal]        
         },
         othersAllergy: {
           type: [String],
