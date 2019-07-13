@@ -16,15 +16,15 @@ const dataMedical = "../Data/allergies.js"
 const contactsSchema = new mongoose.Schema({
   relationship: {
     type: String,
-    required: [true, "Contact relationship is necesary"]
+    // required: [true, "Contact relationship is necesary"]
   },
   contactname: {
     type: String,
-    required: [true, "Contact name is necesary"]
+    // required: [true, "Contact name is necesary"]
   },
   telephone: {
     type: [String],
-    required: [true, "Aa telephone contact is required"],
+    // required: [true, "Aa telephone contact is required"],
     match: [
       PHONE_PATTERN,
       "Invalid Phone Number, a spanish phone number is required"
@@ -64,7 +64,7 @@ const userSchema = new mongoose.Schema(
     aAContacts: {
         type: [contactsSchema],
       //  required: true,
-        validate: [validateContacts, "A AaContact is necesary"]
+      //  validate: [validateContacts, "A AaContact is necesary"]
     },
     personalIdNumber: {
         type: String,
