@@ -45,80 +45,71 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: [true, "password is required"],
-      match: [
-        PASSWORD_PATTERN,
-        "Passwords must contain at least eight characters, including uppercase, lowercase letters and numbers."
-      ]
+      match: [PASSWORD_PATTERN,"Passwords must contain at least eight characters, including uppercase, lowercase letters and numbers."]
     },
     avatarURL: {
       type: String,
-      unique: [true, "url image ir required"],
-      required: [true, "Image is need for recognise you ;)"],
-      match: [URL_PATTERN, "Invalid User Image URL Pattern"]
+      // unique: [true, "url image ir required"],
+      // required: [true, "Image is need for recognise you ;)"],
+      //  match: [URL_PATTERN, "Invalid User Image URL Pattern"]
     },
-    personalData: {
-      name: {
+    name: {
         type: String,
-        required: [true, "your name is required"]
-      },
-      surName: {
+      //  required: [true, "your name is required"]
+    },
+    surName: {
         type: String,
-        required: [true, "Your Surname is required"]
-      },
-      aAContacts: {
+      //  required: [true, "Your Surname is required"]
+    },
+    aAContacts: {
         type: [contactsSchema],
-        required: true,
+      //  required: true,
         validate: [validateContacts, "A AaContact is necesary"]
-      },
-      personalIdNumber: {
-        type: String,
-        match: [NIF_NIE_PATTERN, "Invalid NIF or NIE Pattern"]
-      },
-      ssn: {
-        type: String,
-        MATCH: [SSNUMBER_PATTERN, "Invalid Social Security Number"]
-      }
     },
-    medicalData: {
-      blood: {
+    personalIdNumber: {
+        type: String,
+      //  match: [NIF_NIE_PATTERN, "Invalid NIF or NIE Pattern"]
+    },
+    ssn: {
+        type: String,
+      //  MATCH: [SSNUMBER_PATTERN, "Invalid Social Security Number"]
+    },
+    blood: {
         type: String,
         enum: [dataMedical.blood],
-        required: [true, "Like Human you have a Blood Type ;)"]
-      },
-      allergies: {
-        medical: {
+      //  required: [true, "Like Human you have a Blood Type ;)"]
+    },
+    medical: {
           type: [String],
-          required: [true, "choose at least one Med Allergy option"],
+      //    required: [true, "choose at least one Med Allergy option"],
           enum: [dataMedical.medical]
-        },
-        food: {
+    },
+    food: {
           type: [String],
-          required: [true, "choose at least one Food Allergy option"],
+      //    required: [true, "choose at least one Food Allergy option"],
           enum: [dataMedical.food]
-        },
-        ambiental: {
+    },
+    ambiental: {
           type: [String],
-          required: [true, "Choose at least one Ambiental Allergy option"],
+      //    required: [true, "Choose at least one Ambiental Allergy option"],
           enum: [dataMedical.ambiental]
-        },
-        animal: {
+    },
+    animal: {
           type: [String],
-          required: [true, "Choose at least one Animal Allergy option"],
+      //    required: [true, "Choose at least one Animal Allergy option"],
           enum: [dataMedical.animal]        
-        },
-        othersAllergy: {
+    },
+    othersAllergy: {
           type: [String],
-          required: [true, "Choose at least one Allergy option or nothing"]
-        }
-      },
-      medsINeed: {
+      //    required: [true, "Choose at least one Allergy option or nothing"]
+    },
+    medsINeed: {
         type: [String],
-        required: [true, "Choose at least one Med that you need or nothing"]
-      },
-      diseases: {
+      //  required: [true, "Choose at least one Med that you need or nothing"]
+    },
+    diseases: {
         type: [String],
-        required: [true, "Details your diseases or select nothing"]
-      }
+      //  required: [true, "Details your diseases or select nothing"]
     },
     securityCode: {
       type: Number,
